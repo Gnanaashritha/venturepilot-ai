@@ -1,3 +1,6 @@
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from io import BytesIO
 import streamlit as st
 from openai import OpenAI
 import os
@@ -10,11 +13,30 @@ client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPENROUTER_API_KEY")
 )
+
 st.set_page_config(
     page_title="VenturePilot AI",
     page_icon="🚀",
     layout="wide"
 )
+
+def create_pdf(report_text):
+    buffer = BytesIO()
+
+    doc = SimpleDocTemplate(buffer)
+    styles = getSampleStyleSheet()
+
+    content = []
+
+    for line in report_text.split("\n"):
+        if line.strip():
+            content.append(Paragraph(line, styles["BodyText"]))
+
+    doc.build(content)
+
+    buffer.seek(0)
+    return buffer
+
 
 st.title("🚀 VenturePilot AI")
 
@@ -36,18 +58,23 @@ if st.button("🚀 Analyze Startup"):
     )
 
     with st.spinner("Analyzing startup idea..."):
-        
-        response = client.chat.completions.create(
-        model="nvidia/nemotron-3-super-120b-a12b:free",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
 
-    st.markdown(response.choices[0].message.content)
-    st.download_button(
-    label="📥 Download Report",
-    data=response.choices[0].message.content,
-    file_name="startup_report.txt",
-    mime="text/plain"
-)
+        response = client.chat.completions.create(
+            model="nvidia/nemotron-3-super-120b-a12b:free",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        report = response.choices[0].message.content
+
+        st.markdown(report)
+
+        pdf_file = create_pdf(report)
+
+        st.download_button(
+            label="📄 Download PDF Report",
+            data=pdf_file,
+            file_name="startup_report.pdf",
+            mime="application/pdf"
+        )
