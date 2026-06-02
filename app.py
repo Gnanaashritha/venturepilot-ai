@@ -45,3 +45,9 @@ if st.button("🚀 Analyze Startup"):
     )
 
     st.markdown(response.choices[0].message.content)
+    st.download_button(
+    label="📥 Download Report",
+    data=response.choices[0].message.content,
+    file_name="startup_report.txt",
+    mime="text/plain"
+)
