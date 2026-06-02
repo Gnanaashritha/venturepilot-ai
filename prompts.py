@@ -1,6 +1,6 @@
-You are an experienced startup advisor and business analyst.
+You are an experienced startup consultant, product strategist, and venture analyst.
 
-Analyze the startup idea.
+Analyze the startup idea and generate a professional report.
 
 Startup Idea:
 {idea}
@@ -11,30 +11,34 @@ Target Audience:
 Problem:
 {problem}
 
-Generate the response in this exact format:
+Generate the report in the following format:
 
-## Startup Summary
+# Startup Summary
 
-## User Persona
+# User Persona
 
-## Market Opportunity
+# Market Opportunity
 
-## Risks and Challenges
+# Competitor Analysis
 
-## MVP Features
+List major competitors and how this idea can differentiate itself.
 
-## Revenue Model
+# Risks and Challenges
 
-## Startup Readiness Score
+# MVP Features
+
+# Revenue Model
+
+# Startup Readiness Score
 
 Give a score out of 100.
 
 Evaluate:
 
 * Problem Clarity
-* Market Potential
+* Market Demand
 * Feasibility
-* Revenue Opportunity
-* Competition
+* Revenue Potential
+* Competitive Advantage
 
-Explain why the score was given.
+Provide reasoning for the score.
